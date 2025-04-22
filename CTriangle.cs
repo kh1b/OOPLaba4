@@ -12,8 +12,9 @@ namespace OOPLaba4
         private int size = 50; // Размер треугольника
 
         // Конструктор
-        public CTriangle(int x, int y) : base(x, y)
+        public CTriangle (int x, int y) : base(x, y)
         {
+            this.y = y + size / -3;
         }
 
         // Реализация метода ContainsPoint
@@ -27,11 +28,23 @@ namespace OOPLaba4
         public override void Draw(Graphics g)
         {
             Brush brush = isSelected ? Brushes.Red : new SolidBrush(color);
-            Point[] points = GetTrianglePoints();
+            int scaledSize = (int)(size * scale);
+            Point[] points = GetTrianglePoints(scaledSize);
             g.FillPolygon(brush, points);
         }
 
         // Получение точек треугольника
+        private Point[] GetTrianglePoints(int scaledSize)
+        {
+            return new Point[]
+            {
+                new Point(x, y + scaledSize),
+                new Point(x - scaledSize / 2, y),
+                new Point(x + scaledSize / 2, y)
+            };
+        }
+
+        // Получение точек треугольника (для проверки точки внутри треугольника)
         private Point[] GetTrianglePoints()
         {
             return new Point[]
@@ -58,6 +71,12 @@ namespace OOPLaba4
         private float Sign(int px, int py, int x1, int y1, int x2, int y2)
         {
             return (px - x2) * (y1 - y2) - (x1 - x2) * (py - y2);
+        }
+
+        // Реализация метода Resize
+        public override void Resize(float factor, int maxX, int maxY)
+        {
+            base.Resize(factor, maxX - size / 2, maxY - size);
         }
 
         // Переопределение метода Move для треугольника

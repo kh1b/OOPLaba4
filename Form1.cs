@@ -38,19 +38,34 @@ namespace OOPLaba4
                     {
                         if (!isCtrlPressed)
                         {
+                            // Если Ctrl не нажат, снимаем выделение со всех фигур
                             foreach (var s in storage.GetShapes())
                                 s.SetSelected(false);
                         }
 
+                        // Переключаем выделение текущей фигуры
                         shape.SetSelected(!shape.IsSelected());
                         anySelected = true;
                     }
                 }
 
-                if (!anySelected && currentShapeType != null)
+                if (!anySelected)
                 {
-                    BaseShape newShape = (BaseShape)Activator.CreateInstance(currentShapeType, e.X, e.Y)!;
-                    storage.AddShape(newShape);
+                    if (isCtrlPressed)
+                    {
+                        // Если Ctrl нажат и клик был на пустой области, снимаем выделение со всех фигур
+                        foreach (var s in storage.GetShapes())
+                            s.SetSelected(false);
+                    }
+                    else
+                    {
+                        // Если Ctrl не нажат, создаём новую фигуру
+                        if (currentShapeType != null)
+                        {
+                            BaseShape newShape = (BaseShape)Activator.CreateInstance(currentShapeType, e.X, e.Y)!;
+                            storage.AddShape(newShape);
+                        }
+                    }
                 }
 
                 this.Invalidate();

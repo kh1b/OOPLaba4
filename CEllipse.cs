@@ -13,8 +13,11 @@ namespace OOPLaba4
         private int height = 50; // Высота эллипса
 
         // Конструктор
-        public CEllipse(int x, int y) : base(x, y)
+        public CEllipse(int centerX, int centerY) : base(0, 0)
         {
+            // Вычисляем верхний левый угол на основе центра клика
+            this.x = centerX - width / 2;
+            this.y = centerY - height / 2;
         }
 
         // Реализация метода ContainsPoint
@@ -29,13 +32,21 @@ namespace OOPLaba4
         public override void Draw(Graphics g)
         {
             Brush brush = isSelected ? Brushes.Red : new SolidBrush(color);
-            g.FillEllipse(brush, x, y, width, height);
+            int scaledWidth = (int)(width * scale); // Учитываем масштаб
+            int scaledHeight = (int)(height * scale); // Учитываем масштаб
+            g.FillEllipse(brush, x, y, scaledWidth, scaledHeight);
+        }
+
+        // Реализация метода Resize
+        public override void Resize(float factor, int maxX, int maxY)
+        {
+            base.Resize(factor, maxX - (int)(width * scale / 2), maxY - (int)(height * scale / 2));
         }
 
         // Переопределение метода Move для эллипса
         public override void Move(int dx, int dy, int maxX, int maxY)
         {
-            base.Move(dx, dy, maxX - width, maxY - height);
+            base.Move(dx, dy, maxX - (int)(width * scale / 2), maxY - (int)(height * scale / 2));
         }
     }
 }

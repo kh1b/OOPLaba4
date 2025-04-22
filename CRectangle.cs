@@ -15,6 +15,8 @@ namespace OOPLaba4
         // Конструктор
         public CRectangle(int x, int y) : base(x, y)
         {
+            this.x = x - width / 2;
+            this.y = y - height / 2;
         }
 
         // Реализация метода ContainsPoint
