@@ -5,6 +5,21 @@ namespace OOPLaba4
 {
     public abstract class BaseShape
     {
+        // Добавляем коэффициент масштабирования
+        protected float scale = 1.0f;
+
+        // Метод для изменения размера фигуры
+        public virtual void Resize(float factor, int maxX, int maxY)
+        {
+            scale *= factor;
+
+            // Проверка выхода за границы после изменения размера
+            if (x < 0) x = 0;
+            if (y < 0) y = 0;
+            if (x > maxX) x = maxX;
+            if (y > maxY) y = maxY;
+        }
+
         protected int x, y; // Координаты центра или верхнего левого угла
         protected Color color = Color.Blue; // Цвет фигуры
         protected bool isSelected; // Состояние выделения

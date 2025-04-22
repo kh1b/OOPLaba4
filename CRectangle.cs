@@ -27,7 +27,14 @@ namespace OOPLaba4
         public override void Draw(Graphics g)
         {
             Brush brush = isSelected ? Brushes.Red : new SolidBrush(color);
-            g.FillRectangle(brush, x, y, width, height);
+            int scaledWidth = (int)(width * scale);
+            int scaledHeight = (int)(height * scale);
+            g.FillRectangle(brush, x, y, scaledWidth, scaledHeight);
+        }
+
+        public override void Resize(float factor, int maxX, int maxY)
+        {
+            base.Resize(factor, maxX - (int)(width * scale), maxY - (int)(height * scale));
         }
 
         // Переопределение метода Move для прямоугольника

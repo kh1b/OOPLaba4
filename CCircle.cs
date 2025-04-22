@@ -26,7 +26,13 @@ namespace OOPLaba4
         public override void Draw(Graphics g)
         {
             Brush brush = isSelected ? Brushes.Red : new SolidBrush(color);
-            g.FillEllipse(brush, x - radius, y - radius, 2 * radius, 2 * radius);
+            int scaledRadius = (int)(radius * scale);
+            g.FillEllipse(brush, x - scaledRadius, y - scaledRadius, 2 * scaledRadius, 2 * scaledRadius);
+        }
+
+        public override void Resize(float factor, int maxX, int maxY)
+        {
+            base.Resize(factor, maxX - (int)(radius * scale), maxY - (int)(radius * scale));
         }
 
         // Переопределение метода Move для круга
