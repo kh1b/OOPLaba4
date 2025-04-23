@@ -82,7 +82,17 @@ namespace OOPLaba4
         // Переопределение метода Move для треугольника
         public override void Move(int dx, int dy, int maxX, int maxY)
         {
-            base.Move(dx, dy, maxX - size / 2, maxY - size);
+            base.Move(dx, dy, maxX, maxY);
+        }
+
+        protected override int GetWidth()
+        {
+            return size; // Ширина треугольника
+        }
+
+        protected override int GetHeight()
+        {
+            return size * 2; // Высота треугольника
         }
     }
 }

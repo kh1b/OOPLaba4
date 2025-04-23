@@ -44,5 +44,15 @@ namespace OOPLaba4
         {
             base.Move(dx, dy, maxX - width, maxY - height);
         }
+
+        protected override int GetWidth()
+        {
+            return width /30;
+        }
+
+        protected override int GetHeight()
+        {
+            return height /30;
+        }
     }
 }

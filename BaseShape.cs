@@ -8,19 +8,7 @@ namespace OOPLaba4
         // Добавляем коэффициент масштабирования
         protected float scale = 1.0f;
 
-        // Метод для изменения размера фигуры
-        public virtual void Resize(float factor, int maxX, int maxY)
-        {
-            scale *= factor;
-
-            // Проверка выхода за границы после изменения размера
-            if (x < 0) x = 0;
-            if (y < 0) y = 0;
-            if (x > maxX) x = maxX;
-            if (y > maxY) y = maxY;
-        }
-
-        protected int x, y; // Координаты центра или верхнего левого угла
+        protected int x, y; // Координаты верхнего левого угла
         protected Color color = Color.Blue; // Цвет фигуры
         protected bool isSelected; // Состояние выделения
 
@@ -53,14 +41,32 @@ namespace OOPLaba4
         // Метод для перемещения фигуры
         public virtual void Move(int dx, int dy, int maxX, int maxY)
         {
-            x += dx;
-            y += dy;
+            // Вычисляем новые координаты
+            int newX = x + dx;
+            int newY = y + dy;
 
-            // Проверка выхода за границы
-            if (x < 0) x = 0;
-            if (y < 0) y = 0;
-            if (x > maxX) x = maxX;
-            if (y > maxY) y = maxY;
+            // Определяем ширину и высоту фигуры с учётом масштаба
+            int scaledWidth = (int)(GetWidth() * scale);
+            int scaledHeight = (int)(GetHeight() * scale);
+
+            // Проверяем, чтобы ни одна часть фигуры не выходила за границы
+            if (newX - scaledWidth / 2 < 0) newX = scaledWidth / 2; // Левая граница
+            if (newY - scaledHeight / 2 < 0) newY = scaledHeight / 2; // Верхняя граница
+            if (newX + scaledWidth / 2 > maxX) newX = maxX - scaledWidth / 2; // Правая граница
+            if (newY + scaledHeight / 2 > maxY) newY = maxY - scaledHeight / 2; // Нижняя граница
+
+            // Обновляем координаты
+            x = newX;
+            y = newY;
+        }
+
+        // Метод для изменения размера фигуры
+        public virtual void Resize(float factor, int maxX, int maxY)
+        {
+            scale *= factor;
+
+            // После изменения размера проверяем, чтобы фигура не выходила за границы
+            Move(0, 0, maxX, maxY); // "Перемещаем" фигуру на месте, чтобы скорректировать положение
         }
 
         // Метод для изменения цвета
@@ -68,5 +74,9 @@ namespace OOPLaba4
         {
             color = newColor;
         }
+
+        // Абстрактные методы для получения ширины и высоты фигуры
+        protected abstract int GetWidth();
+        protected abstract int GetHeight();
     }
 }

@@ -38,7 +38,17 @@ namespace OOPLaba4
         // Переопределение метода Move для круга
         public override void Move(int dx, int dy, int maxX, int maxY)
         {
-            base.Move(dx, dy, maxX - radius, maxY - radius);
+            base.Move(dx, dy, maxX, maxY);
+        }
+
+        protected override int GetWidth()
+        {
+            return radius * 2; // Диаметр круга
+        }
+
+        protected override int GetHeight()
+        {
+            return radius * 2; // Диаметр круга
         }
     }
 }
