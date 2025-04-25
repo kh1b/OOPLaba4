@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOPLaba4
 {
     public class CTriangle : BaseShape
     {
-        private int size = 50; // Размер треугольника
+        private int width = 60;  // Ширина треугольника (основание)
+        private int height = 80; // Высота треугольника
 
         // Конструктор
-        public CTriangle (int x, int y) : base(x, y)
+        public CTriangle(int centerX, int centerY) : base(centerX, centerY)
         {
-            this.y = y + size / -3;
         }
 
         // Реализация метода ContainsPoint
@@ -28,19 +24,24 @@ namespace OOPLaba4
         public override void Draw(Graphics g)
         {
             Brush brush = isSelected ? Brushes.Red : new SolidBrush(color);
-            int scaledSize = (int)(size * scale);
-            Point[] points = GetTrianglePoints(scaledSize);
+            int scaledWidth = (int)(width * scale);  // Учитываем масштаб
+            int scaledHeight = (int)(height * scale); // Учитываем масштаб
+
+            // Получаем точки треугольника с учётом масштаба
+            Point[] points = GetTrianglePoints(scaledWidth, scaledHeight);
+
+            // Рисуем треугольник
             g.FillPolygon(brush, points);
         }
 
-        // Получение точек треугольника
-        private Point[] GetTrianglePoints(int scaledSize)
+        // Получение точек треугольника (с учётом масштаба)
+        private Point[] GetTrianglePoints(int scaledWidth, int scaledHeight)
         {
             return new Point[]
             {
-                new Point(x, y + scaledSize),
-                new Point(x - scaledSize / 2, y),
-                new Point(x + scaledSize / 2, y)
+                new Point(x, y + scaledHeight / 2), // Нижняя точка
+                new Point(x - scaledWidth / 2, y - scaledHeight / 2), // Левая верхняя точка
+                new Point(x + scaledWidth / 2, y - scaledHeight / 2) // Правая верхняя точка
             };
         }
 
@@ -49,9 +50,9 @@ namespace OOPLaba4
         {
             return new Point[]
             {
-                new Point(x, y + size),
-                new Point(x - size / 2, y),
-                new Point(x + size / 2, y)
+                new Point(x, y + height / 2), // Нижняя точка
+                new Point(x - width / 2, y - height / 2), // Левая верхняя точка
+                new Point(x + width / 2, y - height / 2) // Правая верхняя точка
             };
         }
 
@@ -68,15 +69,10 @@ namespace OOPLaba4
             return !(hasNeg && hasPos);
         }
 
+        // Вспомогательный метод: знаковая площадь треугольника
         private float Sign(int px, int py, int x1, int y1, int x2, int y2)
         {
             return (px - x2) * (y1 - y2) - (x1 - x2) * (py - y2);
-        }
-
-        // Реализация метода Resize
-        public override void Resize(float factor, int maxX, int maxY)
-        {
-            base.Resize(factor, maxX - size / 2, maxY - size);
         }
 
         // Переопределение метода Move для треугольника
@@ -85,14 +81,15 @@ namespace OOPLaba4
             base.Move(dx, dy, maxX, maxY);
         }
 
+        // Методы для получения исходных размеров
         protected override int GetWidth()
         {
-            return size; // Ширина треугольника
+            return width; // Полная ширина треугольника
         }
 
         protected override int GetHeight()
         {
-            return size * 2; // Высота треугольника
+            return height; // Полная высота треугольника
         }
     }
 }

@@ -34,9 +34,11 @@
             exitToolStripMenuItem = new ToolStripMenuItem();
             toolStrip = new ToolStrip();
             toolStripButton1 = new ToolStripButton();
+            toolStripButton5 = new ToolStripButton();
             toolStripButton2 = new ToolStripButton();
             toolStripButton3 = new ToolStripButton();
             toolStripButton4 = new ToolStripButton();
+            toolStripButton6 = new ToolStripButton();
             menuStrip.SuspendLayout();
             toolStrip.SuspendLayout();
             SuspendLayout();
@@ -60,12 +62,12 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(109, 22);
             exitToolStripMenuItem.Text = "Выход";
             // 
             // toolStrip
             // 
-            toolStrip.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2, toolStripButton3, toolStripButton4 });
+            toolStrip.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton5, toolStripButton2, toolStripButton3, toolStripButton4, toolStripButton6 });
             toolStrip.Location = new Point(0, 24);
             toolStrip.Name = "toolStrip";
             toolStrip.Size = new Size(800, 25);
@@ -81,6 +83,15 @@
             toolStripButton1.Name = "toolStripButton1";
             toolStripButton1.Size = new Size(36, 22);
             toolStripButton1.Text = "Круг";
+            // 
+            // toolStripButton5
+            // 
+            toolStripButton5.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButton5.Image = (Image)resources.GetObject("toolStripButton5.Image");
+            toolStripButton5.ImageTransparentColor = Color.Magenta;
+            toolStripButton5.Name = "toolStripButton5";
+            toolStripButton5.Size = new Size(54, 22);
+            toolStripButton5.Text = "Квадрат";
             // 
             // toolStripButton2
             // 
@@ -108,6 +119,15 @@
             toolStripButton4.Name = "toolStripButton4";
             toolStripButton4.Size = new Size(81, 22);
             toolStripButton4.Text = "Треугольник";
+            // 
+            // toolStripButton6
+            // 
+            toolStripButton6.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButton6.Image = (Image)resources.GetObject("toolStripButton6.Image");
+            toolStripButton6.ImageTransparentColor = Color.Magenta;
+            toolStripButton6.Name = "toolStripButton6";
+            toolStripButton6.Size = new Size(56, 22);
+            toolStripButton6.Text = "Отрезок";
             // 
             // Form1
             // 
@@ -137,5 +157,7 @@
         private ToolStripButton toolStripButton2;
         private ToolStripButton toolStripButton3;
         private ToolStripButton toolStripButton4;
+        private ToolStripButton toolStripButton5;
+        private ToolStripButton toolStripButton6;
     }
 }

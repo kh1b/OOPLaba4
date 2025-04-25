@@ -6,9 +6,9 @@ using System.Windows.Forms;
 namespace OOPLaba4
 {
     public partial class Form1 : Form
-    {
-        private ShapeStorage storage = new ShapeStorage();
-        private bool isCtrlPressed = false;
+    { 
+        private ShapeStorage storage = new ShapeStorage(); // Хранилище фигур
+        private bool isCtrlPressed = false; // Флаг для отслеживания нажатия Ctrl
         private Type? currentShapeType = typeof(CCircle); // Текущий тип фигуры
 
         public Form1()
@@ -26,15 +26,17 @@ namespace OOPLaba4
             this.KeyUp += MainForm_KeyUp;
         }
 
+        // Обработка нажатия кнопки мыши
         private void MainForm_MouseDown(object? sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left) // Проверяем, что нажата левая кнопка мыши
             {
-                bool anySelected = false;
+                bool anySelected = false; // Флаг для проверки, была ли выбрана хотя бы одна фигура
 
+                // Проходим по всем фигурам в хранилище
                 foreach (var shape in storage.GetShapes())
                 {
-                    if (shape.ContainsPoint(e.X, e.Y))
+                    if (shape.ContainsPoint(e.X, e.Y)) // Если точка клика находится внутри фигуры
                     {
                         if (!isCtrlPressed)
                         {
@@ -49,6 +51,7 @@ namespace OOPLaba4
                     }
                 }
 
+                // Если ни одна фигура не была выбрана
                 if (!anySelected)
                 {
                     if (isCtrlPressed)
@@ -72,6 +75,7 @@ namespace OOPLaba4
             }
         }
 
+        // Отрисовка всех фигур на форме
         private void MainForm_Paint(object? sender, PaintEventArgs e)
         {
             foreach (var shape in storage.GetShapes())
@@ -80,14 +84,16 @@ namespace OOPLaba4
             }
         }
 
+        // Обработка нажатия клавиш
         private void MainForm_KeyDown(object? sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            if (e.KeyCode == Keys.Delete) // Удаление выделенных фигур
             {
                 storage.RemoveSelectedShapes();
                 this.Invalidate();
             }
 
+            // Перемещение выделенных фигур с помощью стрелок
             if (e.KeyCode == Keys.Up)
             {
                 foreach (var shape in storage.GetShapes())
@@ -128,6 +134,7 @@ namespace OOPLaba4
                 this.Invalidate();
             }
 
+            // Изменение размера выделенных фигур
             if (e.KeyCode == Keys.Add || e.KeyCode == Keys.Oemplus) // Увеличение размера
             {
                 foreach (var shape in storage.GetShapes())
@@ -148,6 +155,7 @@ namespace OOPLaba4
                 this.Invalidate();
             }
 
+            // Изменение цвета выделенных фигур через диалог выбора цвета
             if (e.KeyCode == Keys.C && e.Control)
             {
                 using (ColorDialog colorDialog = new ColorDialog())
@@ -170,6 +178,7 @@ namespace OOPLaba4
             }
         }
 
+        // Обработка отпускания клавиш
         private void MainForm_KeyUp(object? sender, KeyEventArgs e)
         {
             if (!e.Control)
@@ -178,11 +187,13 @@ namespace OOPLaba4
             }
         }
 
+        // Выход из приложения
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit(); // Закрыть приложение
         }
 
+        // Обработка нажатия кнопок панели инструментов
         private void toolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             // Проверяем, какая кнопка была нажата
@@ -201,6 +212,14 @@ namespace OOPLaba4
             else if (e.ClickedItem == toolStripButton4)
             {
                 currentShapeType = typeof(CTriangle); // Установить текущий тип фигуры как треугольник
+            }
+            else if (e.ClickedItem == toolStripButton5)
+            {
+                currentShapeType = typeof(CSquare); // Установить текущий тип фигуры как квадрат
+            }
+            else if (e.ClickedItem == toolStripButton6)
+            {
+                currentShapeType = typeof(CLine); // Установить текущий тип фигуры как отрезок
             }
         }
     }

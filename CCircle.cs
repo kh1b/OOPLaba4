@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOPLaba4
 {
@@ -30,6 +26,7 @@ namespace OOPLaba4
             g.FillEllipse(brush, x - scaledRadius, y - scaledRadius, 2 * scaledRadius, 2 * scaledRadius);
         }
 
+        // Реализация метода Resize
         public override void Resize(float factor, int maxX, int maxY)
         {
             base.Resize(factor, maxX - (int)(radius * scale), maxY - (int)(radius * scale));
